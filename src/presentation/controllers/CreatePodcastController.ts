@@ -1,8 +1,15 @@
+import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
 import { ICreatePodcastUseCase } from '@/domain/useCases/createPodcast/ICreatePodcastUseCase';
 
 import { validateRequiredParams } from '../helpers/validation';
 import { IController } from '../protocols/controller';
-import { Request, Response, created, badRequest } from '../protocols/http';
+import {
+  Request,
+  Response,
+  created,
+  badRequest,
+  internalServerError,
+} from '../protocols/http';
 
 export class CreatePodcastController implements IController {
   constructor(private readonly createPodcastUseCase: ICreatePodcastUseCase) {}
@@ -20,12 +27,20 @@ export class CreatePodcastController implements IController {
 
     const { name, description, links } = request.body;
 
-    const podcast = await this.createPodcastUseCase.create({
-      name,
-      description,
-      links,
-    });
+    try {
+      const podcast = await this.createPodcastUseCase.create({
+        name,
+        description,
+        links,
+      });
 
-    return created(podcast);
+      return created(podcast);
+    } catch (error) {
+      if (error instanceof PodcastAlreadyExistsError) {
+        return badRequest({ error: error.message });
+      }
+
+      return internalServerError();
+    }
   }
 }
