@@ -25,8 +25,8 @@ export class CreatePodcastUseCase implements ICreatePodcastUseCase {
       throw new PodcastAlreadyExistsError();
     }
 
-    await this.createPodcastRepository.create(data);
+    const podcast = await this.createPodcastRepository.create(data);
 
-    return {} as Podcast;
+    return podcast;
   }
 }
