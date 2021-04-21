@@ -1,5 +1,5 @@
 export function map<T>(data: any): T {
-  const { _id: id, ...collectionWithouId } = data;
+  const { _id: id, ...collectionWithouId } = data.toJSON();
 
   return {
     id,
