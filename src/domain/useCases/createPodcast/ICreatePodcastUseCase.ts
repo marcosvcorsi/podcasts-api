@@ -1,4 +1,4 @@
-import { Podcast } from '../entities/Podcast';
+import { Podcast } from '@/domain/entities/Podcast';
 
 export type CreatePodcastParams = {
   name: string;
@@ -6,6 +6,6 @@ export type CreatePodcastParams = {
   links: string[];
 };
 
-export interface ICreatePodcast {
+export interface ICreatePodcastUseCase {
   create(data: CreatePodcastParams): Promise<Podcast>;
 }

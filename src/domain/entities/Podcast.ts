@@ -1,6 +1,6 @@
 export type Podcast = {
   id: string;
-  title: string;
+  name: string;
   description: string;
   links: string[];
 };
