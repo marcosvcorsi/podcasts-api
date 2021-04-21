@@ -1,5 +1,6 @@
 import { IFindPodcastByNameRepository } from '@/data/protocols/IFindPodcastByNameRepository';
 import { Podcast } from '@/domain/entities/Podcast';
+import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
 import { CreatePodcastUseCase } from '@/domain/useCases/createPodcast/CreatePodcastUseCase';
 import { CreatePodcastParams } from '@/domain/useCases/createPodcast/ICreatePodcastUseCase';
 
@@ -19,8 +20,8 @@ const mockPodcast = (): Podcast => ({
 const mockFindPodcastByNameRepository = () => {
   class FindPodcastByNameRepositoryStub
     implements IFindPodcastByNameRepository {
-    async findByName(): Promise<Podcast> {
-      return mockPodcast();
+    async findByName(): Promise<Podcast | undefined> {
+      return undefined;
     }
   }
 
@@ -56,5 +57,17 @@ describe('CreatePodcastUseCase Tests', () => {
       .mockRejectedValueOnce(new Error());
 
     await expect(createPodcastUseCase.create(params)).rejects.toThrow();
+  });
+
+  it('should throw if FindPodcastByNameRepository finds one', async () => {
+    const params = mockCreatePodcastParams();
+
+    jest
+      .spyOn(findPodcastByNameRepository, 'findByName')
+      .mockResolvedValueOnce(mockPodcast());
+
+    await expect(createPodcastUseCase.create(params)).rejects.toBeInstanceOf(
+      PodcastAlreadyExistsError
+    );
   });
 });
