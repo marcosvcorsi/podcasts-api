@@ -1,5 +1,6 @@
 import { IFindPodcastByNameRepository } from '@/data/protocols/IFindPodcastByNameRepository';
 import { Podcast } from '@/domain/entities/Podcast';
+import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
 
 import {
   CreatePodcastParams,
@@ -14,7 +15,13 @@ export class CreatePodcastUseCase implements ICreatePodcastUseCase {
   async create(data: CreatePodcastParams): Promise<Podcast> {
     const { name } = data;
 
-    await this.findPodcastByNameRepository.findByName(name);
+    const podcastAlreadyExists = await this.findPodcastByNameRepository.findByName(
+      name
+    );
+
+    if (podcastAlreadyExists) {
+      throw new PodcastAlreadyExistsError();
+    }
 
     return {} as Podcast;
   }
