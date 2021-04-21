@@ -1,3 +1,4 @@
+import { ICreatePodcastRepository } from '@/data/protocols/ICreatePodcastRepository';
 import { IFindPodcastByNameRepository } from '@/data/protocols/IFindPodcastByNameRepository';
 import { Podcast } from '@/domain/entities/Podcast';
 import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
@@ -28,14 +29,28 @@ const mockFindPodcastByNameRepository = () => {
   return new FindPodcastByNameRepositoryStub();
 };
 
+const mockCreatePodcastRepository = () => {
+  class CreatePodcastRepositoryStub implements ICreatePodcastRepository {
+    async create(): Promise<Podcast> {
+      return mockPodcast();
+    }
+  }
+
+  return new CreatePodcastRepositoryStub();
+};
+
 describe('CreatePodcastUseCase Tests', () => {
   let createPodcastUseCase: CreatePodcastUseCase;
   let findPodcastByNameRepository: IFindPodcastByNameRepository;
+  let createPodcastRepository: ICreatePodcastRepository;
 
   beforeEach(() => {
     findPodcastByNameRepository = mockFindPodcastByNameRepository();
+    createPodcastRepository = mockCreatePodcastRepository();
+
     createPodcastUseCase = new CreatePodcastUseCase(
-      findPodcastByNameRepository
+      findPodcastByNameRepository,
+      createPodcastRepository
     );
   });
 
@@ -69,5 +84,15 @@ describe('CreatePodcastUseCase Tests', () => {
     await expect(createPodcastUseCase.create(params)).rejects.toBeInstanceOf(
       PodcastAlreadyExistsError
     );
+  });
+
+  it('should call CreatePodcastRepository with correct values', async () => {
+    const params = mockCreatePodcastParams();
+
+    const createSpy = jest.spyOn(createPodcastRepository, 'create');
+
+    await createPodcastUseCase.create(params);
+
+    expect(createSpy).toHaveBeenCalledWith(params);
   });
 });
