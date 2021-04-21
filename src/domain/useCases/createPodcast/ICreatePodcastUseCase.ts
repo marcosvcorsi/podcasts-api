@@ -2,7 +2,7 @@ import { Podcast } from '@/domain/entities/Podcast';
 
 export type CreatePodcastParams = {
   name: string;
-  title: string;
+  description: string;
   links: string[];
 };
 

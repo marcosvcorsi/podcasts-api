@@ -7,7 +7,7 @@ import { CreatePodcastParams } from '@/domain/useCases/createPodcast/ICreatePodc
 
 const mockCreatePodcastParams = (): CreatePodcastParams => ({
   name: 'anyname',
-  title: 'anytitle',
+  description: 'anydesc',
   links: ['anylink'],
 });
 
