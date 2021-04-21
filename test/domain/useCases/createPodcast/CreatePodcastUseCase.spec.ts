@@ -95,4 +95,23 @@ describe('CreatePodcastUseCase Tests', () => {
 
     expect(createSpy).toHaveBeenCalledWith(params);
   });
+
+  it('should throw if CreatePodcastRepository throws', async () => {
+    const params = mockCreatePodcastParams();
+
+    jest
+      .spyOn(createPodcastRepository, 'create')
+      .mockRejectedValueOnce(new Error());
+
+    await expect(createPodcastUseCase.create(params)).rejects.toThrow();
+  });
+
+  it('should return podcast on success', async () => {
+    const params = mockCreatePodcastParams();
+
+    const response = await createPodcastUseCase.create(params);
+
+    expect(response).toBeDefined();
+    expect(response.id).toBeDefined();
+  });
 });
