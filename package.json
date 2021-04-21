@@ -5,7 +5,8 @@
   "author": "Marcos Corsi <marcosvcorsi@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "prebuild": "rm -rf dist",
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "start": "node dist/main/server.js",
     "dev": "tsnd -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/main/server.ts",
     "test": "jest --silent --noStackTrace --passWithNoTests --runInBand --detectOpenHandles",
@@ -15,6 +16,13 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
+    "@babel/node": "^7.13.13",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-typescript": "^7.13.0",
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
     "@types/cors": "^2.8.10",
@@ -23,6 +31,8 @@
     "@types/mongoose": "^5.10.5",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "eslint": "^7.24.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.2.0",
