@@ -1,3 +1,4 @@
+import { ICreatePodcastRepository } from '@/data/protocols/ICreatePodcastRepository';
 import { IFindPodcastByNameRepository } from '@/data/protocols/IFindPodcastByNameRepository';
 import { Podcast } from '@/domain/entities/Podcast';
 import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
@@ -9,7 +10,8 @@ import {
 
 export class CreatePodcastUseCase implements ICreatePodcastUseCase {
   constructor(
-    private readonly findPodcastByNameRepository: IFindPodcastByNameRepository
+    private readonly findPodcastByNameRepository: IFindPodcastByNameRepository,
+    private readonly createPodcastRepository: ICreatePodcastRepository
   ) {}
 
   async create(data: CreatePodcastParams): Promise<Podcast> {
@@ -22,6 +24,8 @@ export class CreatePodcastUseCase implements ICreatePodcastUseCase {
     if (podcastAlreadyExists) {
       throw new PodcastAlreadyExistsError();
     }
+
+    await this.createPodcastRepository.create(data);
 
     return {} as Podcast;
   }
