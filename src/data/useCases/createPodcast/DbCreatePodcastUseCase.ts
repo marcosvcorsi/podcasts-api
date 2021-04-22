@@ -1,14 +1,13 @@
+import { PodcastAlreadyExistsError } from '@/data/errors/PodcastAlreadyExistsError';
 import { ICreatePodcastRepository } from '@/data/protocols/ICreatePodcastRepository';
 import { IFindPodcastByNameRepository } from '@/data/protocols/IFindPodcastByNameRepository';
 import { Podcast } from '@/domain/entities/Podcast';
-import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
-
 import {
   CreatePodcastParams,
   ICreatePodcastUseCase,
-} from './ICreatePodcastUseCase';
+} from '@/domain/useCases/createPodcast/ICreatePodcastUseCase';
 
-export class CreatePodcastUseCase implements ICreatePodcastUseCase {
+export class DbCreatePodcastUseCase implements ICreatePodcastUseCase {
   constructor(
     private readonly findPodcastByNameRepository: IFindPodcastByNameRepository,
     private readonly createPodcastRepository: ICreatePodcastRepository

@@ -1,8 +1,8 @@
+import { PodcastAlreadyExistsError } from '@/data/errors/PodcastAlreadyExistsError';
 import { ICreatePodcastRepository } from '@/data/protocols/ICreatePodcastRepository';
 import { IFindPodcastByNameRepository } from '@/data/protocols/IFindPodcastByNameRepository';
+import { DbCreatePodcastUseCase } from '@/data/useCases/createPodcast/DbCreatePodcastUseCase';
 import { Podcast } from '@/domain/entities/Podcast';
-import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
-import { CreatePodcastUseCase } from '@/domain/useCases/createPodcast/CreatePodcastUseCase';
 import { CreatePodcastParams } from '@/domain/useCases/createPodcast/ICreatePodcastUseCase';
 
 const mockCreatePodcastParams = (): CreatePodcastParams => ({
@@ -39,8 +39,8 @@ const mockCreatePodcastRepository = () => {
   return new CreatePodcastRepositoryStub();
 };
 
-describe('CreatePodcastUseCase Tests', () => {
-  let createPodcastUseCase: CreatePodcastUseCase;
+describe('DbCreatePodcastUseCase Tests', () => {
+  let createPodcastUseCase: DbCreatePodcastUseCase;
   let findPodcastByNameRepository: IFindPodcastByNameRepository;
   let createPodcastRepository: ICreatePodcastRepository;
 
@@ -48,7 +48,7 @@ describe('CreatePodcastUseCase Tests', () => {
     findPodcastByNameRepository = mockFindPodcastByNameRepository();
     createPodcastRepository = mockCreatePodcastRepository();
 
-    createPodcastUseCase = new CreatePodcastUseCase(
+    createPodcastUseCase = new DbCreatePodcastUseCase(
       findPodcastByNameRepository,
       createPodcastRepository
     );

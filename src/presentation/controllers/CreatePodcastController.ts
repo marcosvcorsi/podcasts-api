@@ -1,4 +1,4 @@
-import { PodcastAlreadyExistsError } from '@/domain/errors/PodcastAlreadyExistsError';
+import { PodcastAlreadyExistsError } from '@/data/errors/PodcastAlreadyExistsError';
 import { ICreatePodcastUseCase } from '@/domain/useCases/createPodcast/ICreatePodcastUseCase';
 
 import { validateRequiredParams } from '../helpers/validation';
