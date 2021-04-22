@@ -1,9 +1,9 @@
 import { DbCreatePodcastUseCase } from '@/data/useCases/createPodcast/DbCreatePodcastUseCase';
-import { PodcastRepository } from '@/infra/database/mongodb/repositories/PodcastRepository';
+import { PodcastsRepository } from '@/infra/database/mongodb/repositories/PodcastsRepository';
 import { CreatePodcastController } from '@/presentation/controllers/CreatePodcastController';
 
 export const makeCreatePodcastUseCase = (): DbCreatePodcastUseCase => {
-  const podcastsRepository = new PodcastRepository();
+  const podcastsRepository = new PodcastsRepository();
 
   const createPodcastUseCase = new DbCreatePodcastUseCase(
     podcastsRepository,

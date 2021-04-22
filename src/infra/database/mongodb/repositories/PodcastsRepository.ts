@@ -6,7 +6,7 @@ import { CreatePodcastParams } from '@/domain/useCases/createPodcast/ICreatePodc
 import { map } from '../helpers/mapper';
 import { Podcast as PodcastModel } from '../schemas/PodcastSchema';
 
-export class PodcastRepository
+export class PodcastsRepository
   implements ICreatePodcastRepository, IFindPodcastByNameRepository {
   async create(data: CreatePodcastParams): Promise<Podcast> {
     const podcast = await PodcastModel.create(data);
