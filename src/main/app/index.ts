@@ -3,9 +3,11 @@ import express from 'express';
 import 'express-async-errors';
 
 import '@/main/config/env';
-import '@/infra/database/mongodb';
+import { connect } from '@/infra/database/mongodb';
 
 import { routes } from './routes';
+
+connect();
 
 const app = express();
 
