@@ -33,7 +33,7 @@ jobs:
 
       # Run tests
       - name: Run Tests
-        run: yarn test:ci 
+        run: yarn test:cov
       
       # Database down
       - name: Database down
