@@ -1,12 +1,12 @@
 export type Request = {
-  body: any;
-  params: any;
-  query: any;
+  body?: any;
+  params?: any;
+  query?: any;
 };
 
 export type Response = {
   statusCode: number;
-  body: any;
+  body?: any;
 };
 
 const CREATED = 201;
