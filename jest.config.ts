@@ -27,6 +27,7 @@ export default {
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/**/protocols/*.ts',
     '!<rootDir>/src/domain/**/*.ts',
+    '!<rootDir>/src/main/config/*.ts',
     '!<rootDir>/src/main/server.ts',
   ],
 
