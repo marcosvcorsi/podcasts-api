@@ -27,6 +27,14 @@ jobs:
       - name: Install dependencies
         run: yarn
       
+      # Up database for testing
+      - name: Database up
+        run: docker-compose up -d database    
+
       # Run tests
       - name: Run Tests
-        run: yarn test:cov 
+        run: yarn test:ci 
+      
+      # Database down
+      - name: Database down
+        run: docker-compose down    
