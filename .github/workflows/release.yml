@@ -1,0 +1,56 @@
+name: Release
+
+# Controls when the action will run. 
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # Setup node version
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn
+      
+      # Up database for testing
+      - name: Database up
+        run: docker-compose up -d database    
+
+      # Run tests
+      - name: Run Tests
+        run: yarn test:cov
+      
+      # Database down
+      - name: Database down
+        run: docker-compose down
+
+      # Get version from package.json
+      - name: Extract package version
+        uses: nyaa8/package-version@v1.0.3
+      
+      # Show version
+      - name: Print package version
+        run: echo ${{ env.PACKAGE_VERSION }}
+
+            # Upload a docker image to AWS ECR
+      - name: Upload image to AWS ECR
+        uses: appleboy/docker-ecr-action@master
+        with:
+          access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          registry: ${{ secrets.ECR_REGISTRY }}
+          cache_from: ${{ secrets.ECR_CACHE }}
+          repo: podcasts-api
+          tags: latest,${{ env.PACKAGE_VERSION }}            
