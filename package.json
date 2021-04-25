@@ -1,8 +1,12 @@
 {
   "name": "podcasts-api",
+  "description": "Podcasts API",
   "version": "1.0.0",
   "main": "dist/server.js",
   "author": "Marcos Corsi <marcosvcorsi@gmail.com>",
+  "repository": {
+    "url": "https://github.com/marcosvcorsi/podcasts-api"
+  },
   "license": "MIT",
   "scripts": {
     "prebuild": "rm -rf dist",
