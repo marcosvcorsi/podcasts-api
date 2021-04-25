@@ -3,15 +3,7 @@
 name: CI
 
 # Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+on: [push, pull_request] 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -35,6 +27,14 @@ jobs:
       - name: Install dependencies
         run: yarn
       
-      # Run unit tests
+      # Up database for testing
+      - name: Database up
+        run: docker-compose up -d database    
+
+      # Run tests
       - name: Run Tests
-        run: yarn test 
+        run: yarn test:cov
+      
+      # Database down
+      - name: Database down
+        run: docker-compose down    

@@ -1,11 +1,13 @@
 import cors from 'cors';
 import express from 'express';
 import 'express-async-errors';
-import 'dotenv/config';
 
-import '@/infra/database/mongodb';
+import '@/main/config/env';
+import { connect } from '@/infra/database/mongodb';
 
 import { routes } from './routes';
+
+connect();
 
 const app = express();
 

@@ -1,6 +1,14 @@
 import mongoose from 'mongoose';
 
-mongoose.connect(String(process.env.MONGO_URI), {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+import '@/main/config/env';
+
+export const connect = (
+  uri = process.env.MONGO_URI
+): Promise<mongoose.Mongoose> => {
+  return mongoose.connect(String(uri), {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+};
+
+export const disconnect = (): Promise<void> => mongoose.disconnect();
