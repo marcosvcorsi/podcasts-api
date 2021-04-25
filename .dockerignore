@@ -1,7 +1,16 @@
-node_modules
-dist
-
+.dockerignore
 Dockerfile
 docker-compose.yml
 
 .*
+
+node_modules
+dist
+coverage
+test
+
+*.config.js
+*.config.ts
+!babel.config.js
+
+yarn.lock
