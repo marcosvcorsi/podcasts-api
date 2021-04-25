@@ -8,7 +8,9 @@ RUN npm i --silent
 
 COPY . .
 
-RUN npm run build && npm prune --production
+RUN npm run build && \
+  rm -rf src babel.config.js tsconfig.json && \
+  npm prune --production
 
 EXPOSE 3000
 
