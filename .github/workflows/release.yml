@@ -82,4 +82,5 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: PodcastsAPI-Service
-          template: cloud-formation.yml     
+          template: cloud-formation.yml
+          parameter-overrides: "ImageTag=${{ env.PACKAGE_VERSION }}"     
