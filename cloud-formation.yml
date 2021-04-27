@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Podcasts API Service'
 
+Parameters:
+  ImageTag:
+    Description: Podcasts API Image Tag
+    Type: String  
+
 Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -12,7 +17,7 @@ Resources:
       ExecutionRoleArn: arn:aws:iam::425806512256:role/ecsTaskExecutionRole  
       ContainerDefinitions:
         - Name: podcasts-api
-          Image: 425806512256.dkr.ecr.us-east-1.amazonaws.com/podcasts-api
+          Image: !Sub '425806512256.dkr.ecr.us-east-1.amazonaws.com/podcasts-api:${ImageTag}'
           PortMappings:
             - ContainerPort: 3000
           Secrets:
