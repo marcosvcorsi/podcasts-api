@@ -75,4 +75,11 @@ jobs:
           registry: ${{ secrets.ECR_REGISTRY }}
           cache_from: ${{ secrets.ECR_CACHE }}
           repo: podcasts-api
-          tags: latest,${{ env.PACKAGE_VERSION }}            
+          tags: latest,${{ env.PACKAGE_VERSION }}
+          
+      # Execute CloudFormation    
+      - name: Deploy to AWS CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: PodcastsAPI-Service
+          template: cloud-formation.yml     
