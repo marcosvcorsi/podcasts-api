@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Podcasts API Service'
+
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: podcasts-api-cf
+      Memory: '128'
+      RequiresCompatibilities:
+        - EC2
+      ExecutionRoleArn: arn:aws:iam::425806512256:role/ecsTaskExecutionRole  
+      ContainerDefinitions:
+        - Name: podcasts-api
+          Image: 425806512256.dkr.ecr.us-east-1.amazonaws.com/podcasts-api
+          PortMappings:
+            - ContainerPort: 3000
+          Secrets:
+            - { Name: "MONGO_URI", ValueFrom: "arn:aws:ssm:us-east-1:425806512256:parameter/MONGO_URI" } 
+
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: podcasts-api-service
+      Cluster: default
+      LaunchType: EC2
+      DesiredCount: 1
+      TaskDefinition: !Ref TaskDefinition
