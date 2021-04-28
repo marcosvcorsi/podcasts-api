@@ -41,4 +41,15 @@ describe('DbListPodcastsUseCase Tests', () => {
       limit,
     });
   });
+
+  it('should throw if FindPodcastsRepository throws', async () => {
+    jest
+      .spyOn(findPodcastsRepository, 'find')
+      .mockRejectedValueOnce(new Error());
+
+    const page = 1;
+    const limit = 10;
+
+    await expect(dbListPodcastsUseCase.list({ page, limit })).rejects.toThrow();
+  });
 });
