@@ -11,8 +11,8 @@ export class DbListPodcastsUseCase implements IListPodcastsUseCase {
   ) {}
 
   async list({ page, limit }: ListPodcastsParams): Promise<Podcast[]> {
-    await this.findPodcastsRepository.find({ page, limit });
+    const podcasts = await this.findPodcastsRepository.find({ page, limit });
 
-    return [];
+    return podcasts;
   }
 }

@@ -52,4 +52,13 @@ describe('DbListPodcastsUseCase Tests', () => {
 
     await expect(dbListPodcastsUseCase.list({ page, limit })).rejects.toThrow();
   });
+
+  it('should return podcast list on success', async () => {
+    const page = 1;
+    const limit = 10;
+
+    const response = await dbListPodcastsUseCase.list({ page, limit });
+
+    expect(response).toEqual([mockPodcast()]);
+  });
 });
