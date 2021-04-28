@@ -1,5 +1,10 @@
 import { Podcast } from '@/domain/entities/Podcast';
 
+export type ListPodcastsParams = {
+  page: number;
+  limit: number;
+};
+
 export interface IListPodcastsUseCase {
-  list(page: number): Promise<Podcast[]>;
+  list(data: ListPodcastsParams): Promise<Podcast[]>;
 }
