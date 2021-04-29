@@ -1,7 +1,7 @@
 import { IListPodcastsUseCase } from '@/domain/useCases/listPodcasts/IListPodcastsUseCase';
 
 import { IController } from '../protocols/controller';
-import { internalServerError, Request, Response } from '../protocols/http';
+import { internalServerError, ok, Request, Response } from '../protocols/http';
 
 export class ListPodcastsController implements IController {
   constructor(private readonly listPodcastsUseCase: IListPodcastsUseCase) {}
@@ -10,12 +10,12 @@ export class ListPodcastsController implements IController {
     try {
       const { page = 1, limit = 10 } = request.query;
 
-      await this.listPodcastsUseCase.list({
+      const podcasts = await this.listPodcastsUseCase.list({
         page: Number(page),
         limit: Number(limit),
       });
 
-      return {} as Response;
+      return ok(podcasts);
     } catch (error) {
       return internalServerError();
     }
