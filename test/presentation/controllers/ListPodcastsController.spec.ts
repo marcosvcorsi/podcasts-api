@@ -1,7 +1,11 @@
 import { Podcast } from '@/domain/entities/Podcast';
 import { IListPodcastsUseCase } from '@/domain/useCases/listPodcasts/IListPodcastsUseCase';
 import { ListPodcastsController } from '@/presentation/controllers/ListPodcastsController';
-import { internalServerError, Request } from '@/presentation/protocols/http';
+import {
+  internalServerError,
+  ok,
+  Request,
+} from '@/presentation/protocols/http';
 
 const mockRequest = (): Request => ({
   query: {
@@ -10,17 +14,17 @@ const mockRequest = (): Request => ({
   },
 });
 
+const mockPodcast = (): Podcast => ({
+  id: 'anyid',
+  description: 'anydesc',
+  links: ['http://anylink.com'],
+  name: 'anyname',
+});
+
 const mockListPodcastsUseCase = (): IListPodcastsUseCase => {
   class ListPodcastsUseCaseStub implements IListPodcastsUseCase {
     async list(): Promise<Podcast[]> {
-      return [
-        {
-          id: 'anyid',
-          description: 'anydesc',
-          links: ['http://anylink.com'],
-          name: 'anyname',
-        },
-      ];
+      return [mockPodcast()];
     }
   }
 
@@ -61,5 +65,13 @@ describe('ListPodcastsController Tests', () => {
     const result = await listPodcastsController.handle(request);
 
     expect(result).toEqual(internalServerError());
+  });
+
+  it('should return ok with podcasts on success', async () => {
+    const request = mockRequest();
+
+    const result = await listPodcastsController.handle(request);
+
+    expect(result).toEqual(ok([mockPodcast()]));
   });
 });
