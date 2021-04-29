@@ -9,6 +9,8 @@ export type Response = {
   body?: any;
 };
 
+const OK = 200;
+
 const CREATED = 201;
 
 const BAD_REQUEST = 400;
@@ -19,6 +21,8 @@ const makeResponse = (statusCode: number, body: any): Response => ({
   statusCode,
   body,
 });
+
+export const ok = (body: any): Response => makeResponse(OK, body);
 
 export const created = (body: any): Response => makeResponse(CREATED, body);
 

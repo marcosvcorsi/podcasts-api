@@ -14,8 +14,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/test', (req, res) => res.send('OK Novo'));
-
 app.use('/api', routes);
 
 export { app };
