@@ -1,7 +1,7 @@
 import { Podcast } from '@/domain/entities/Podcast';
 import { IListPodcastsUseCase } from '@/domain/useCases/listPodcasts/IListPodcastsUseCase';
 import { ListPodcastsController } from '@/presentation/controllers/ListPodcastsController';
-import { Request } from '@/presentation/protocols/http';
+import { internalServerError, Request } from '@/presentation/protocols/http';
 
 const mockRequest = (): Request => ({
   query: {
@@ -49,5 +49,17 @@ describe('ListPodcastsController Tests', () => {
       page: Number(request.query.page),
       limit: Number(request.query.limit),
     });
+  });
+
+  it('should return internalServerError when DbListPodcastUseCase throws', async () => {
+    jest
+      .spyOn(listPodcastsUseCaseStub, 'list')
+      .mockRejectedValueOnce(new Error());
+
+    const request = mockRequest();
+
+    const result = await listPodcastsController.handle(request);
+
+    expect(result).toEqual(internalServerError());
   });
 });
