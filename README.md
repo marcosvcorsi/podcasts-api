@@ -1,4 +1,4 @@
-## PodcastsAPI
+## Podcasts API
 
 ## O que o projeto faz?
 
