@@ -1,0 +1,85 @@
+openapi: 3.0.0
+
+info:
+  title: Podcasts API
+  description: Add, find and filter your favorite podcasts
+  version: 1.0.0
+  contact: marcosvcorsi@gmail.com
+
+paths:
+  /api/podcasts:
+    post:
+      tags:
+        - Podcasts
+      summary: Create a Podcast
+      description: Create a new Podcast.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/CreatePodcast' 
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/definitions/Podcast'
+        400:
+          description: Podcast already exists
+    get:
+      tags:
+        - Podcasts
+      summary: List Podcasts
+      description: List podcasts filtered and paginated.
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Number of podcast page
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Limit of podcasts by page  
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/definitions/Podcast'        
+            
+definitions:
+  CreatePodcast:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      links:
+        type: array
+        items:
+          type: string   
+
+  Podcast:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      links:
+        type: array
+        items:
+          type: string   
