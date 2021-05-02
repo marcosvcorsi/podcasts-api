@@ -1,6 +1,7 @@
 import { Podcast } from '@/domain/entities/Podcast';
 
 export type FindPodcastsRepositoryParams = {
+  search?: string;
   page: number;
   limit: number;
 };

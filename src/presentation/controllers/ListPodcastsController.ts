@@ -8,9 +8,10 @@ export class ListPodcastsController implements IController {
 
   async handle(request: Request): Promise<Response> {
     try {
-      const { page = 1, limit = 10 } = request.query;
+      const { search, page = 1, limit = 10 } = request.query;
 
       const podcasts = await this.listPodcastsUseCase.list({
+        search,
         page: Number(page),
         limit: Number(limit),
       });
