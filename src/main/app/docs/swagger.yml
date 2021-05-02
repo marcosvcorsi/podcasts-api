@@ -35,6 +35,12 @@ paths:
       description: List podcasts filtered and paginated.
       parameters:
         - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+          description: Name to search podcasts      
+        - in: query
           name: page
           schema:
             type: integer

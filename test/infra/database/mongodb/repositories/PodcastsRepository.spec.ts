@@ -99,5 +99,31 @@ describe('PodcastsRepository Tests', () => {
       expect(result).toHaveLength(1);
       expect(String(result[0].id)).toBe(String(podcast._id));
     });
+
+    it('should be able to return podcasts filtered by name', async () => {
+      await PodcastModel.create({
+        name: 'anyname',
+        description: 'anydesc',
+        links: ['http://example.com'],
+      });
+
+      const createPodcastParams: CreatePodcastParams = {
+        name: 'othername',
+        description: 'anydesc',
+        links: ['http://example.com'],
+      };
+
+      const podcast = await PodcastModel.create(createPodcastParams);
+
+      const result = await podcastsRepository.find({
+        search: 'other',
+        page: 1,
+        limit: 10,
+      });
+
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(1);
+      expect(String(result[0].id)).toBe(String(podcast._id));
+    });
   });
 });

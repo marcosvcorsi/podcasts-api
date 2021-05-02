@@ -28,12 +28,22 @@ export class PodcastsRepository
   }
 
   async find({
+    search,
     page,
     limit,
   }: FindPodcastsRepositoryParams): Promise<Podcast[]> {
     const skip = (page - 1) * limit;
 
-    const podcasts = await PodcastModel.find().skip(skip).limit(limit);
+    const query = search
+      ? PodcastModel.find({
+          name: {
+            $regex: search,
+            $options: 'i',
+          },
+        })
+      : PodcastModel.find();
+
+    const podcasts = await query.skip(skip).limit(limit);
 
     return mapCollection<Podcast>(podcasts);
   }

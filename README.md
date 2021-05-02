@@ -1,5 +1,9 @@
 ## Podcasts API
 
+![CI](https://github.com/marcosvcorsi/podcasts-api/workflows/ci/badge.svg)
+![Release](https://github.com/marcosvcorsi/podcasts-api/workflows/release/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/marcosvcorsi/podcasts-api/badge.svg?branch=main)](https://coveralls.io/github/marcosvcorsi/podcasts-api?branch=main)
+
 ## O que o projeto faz?
 
 - Cadastrar um podcast com nome, descrição e links
