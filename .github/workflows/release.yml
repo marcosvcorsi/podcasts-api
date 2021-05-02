@@ -50,6 +50,12 @@ jobs:
       - name: Database down
         run: docker-compose down
 
+      # coveralls
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}   
+
       # Get version from package.json
       - name: Extract package version
         uses: nyaa8/package-version@v1.0.3
