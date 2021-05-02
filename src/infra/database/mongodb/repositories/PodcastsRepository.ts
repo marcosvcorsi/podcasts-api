@@ -43,7 +43,9 @@ export class PodcastsRepository
         })
       : PodcastModel.find();
 
-    const podcasts = await query.skip(skip).limit(limit);
+    const podcasts = await query.skip(skip).limit(limit).sort({
+      createdAt: -1,
+    });
 
     return mapCollection<Podcast>(podcasts);
   }

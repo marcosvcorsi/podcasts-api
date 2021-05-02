@@ -79,12 +79,6 @@ describe('PodcastsRepository Tests', () => {
     });
 
     it('should be able to return podcasts paginated', async () => {
-      await PodcastModel.create({
-        name: 'anyname',
-        description: 'anydesc',
-        links: ['http://example.com'],
-      });
-
       const createPodcastParams: CreatePodcastParams = {
         name: 'anyname2',
         description: 'anydesc',
@@ -92,6 +86,12 @@ describe('PodcastsRepository Tests', () => {
       };
 
       const podcast = await PodcastModel.create(createPodcastParams);
+
+      await PodcastModel.create({
+        name: 'anyname',
+        description: 'anydesc',
+        links: ['http://example.com'],
+      });
 
       const result = await podcastsRepository.find({ page: 2, limit: 1 });
 

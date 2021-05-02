@@ -66,12 +66,6 @@ describe('Podcasts Routes Tests', () => {
     });
 
     it('should return podcasts with custom pagination', async () => {
-      await PodcastModel.create({
-        name: 'anyname2',
-        description: 'anydesc2',
-        links: ['http://example.com2'],
-      });
-
       const body = {
         name: 'anyname',
         description: 'anydesc',
@@ -79,6 +73,12 @@ describe('Podcasts Routes Tests', () => {
       };
 
       await PodcastModel.create(body);
+
+      await PodcastModel.create({
+        name: 'anyname2',
+        description: 'anydesc2',
+        links: ['http://example.com2'],
+      });
 
       const response = await request(app).get('/api/podcasts').query({
         page: 2,
