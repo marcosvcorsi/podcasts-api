@@ -1,7 +1,7 @@
 ## Podcasts API
 
-![CI](https://github.com/marcosvcorsi/podcasts-api/workflows/CI/badge.svg)
-![Release](https://github.com/marcosvcorsi/podcasts-api/workflows/CI/badge.svg)
+![CI](https://github.com/marcosvcorsi/podcasts-api/workflows/ci/badge.svg)
+![Release](https://github.com/marcosvcorsi/podcasts-api/workflows/release/badge.svg)
 
 ## O que o projeto faz?
 
