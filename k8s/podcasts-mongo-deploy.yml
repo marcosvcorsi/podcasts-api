@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podcasts-mongo-deploy
+spec:
+  selector:
+    matchLabels:
+      app: podcasts-mongo
+  template:
+    metadata:
+      labels:
+        app: podcasts-mongo
+    spec:
+      containers:
+      - name: podcasts-mongo
+        image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podcasts-mongo-service
+spec:
+  selector:
+    app: podcasts-mongo
+  ports:
+  - name: db
+    protocol: TCP
+    port: 27017
+    targetPort: 27017

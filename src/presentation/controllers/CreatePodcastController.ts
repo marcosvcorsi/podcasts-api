@@ -34,6 +34,8 @@ export class CreatePodcastController implements IController {
         links,
       });
 
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
       return created(podcast);
     } catch (error) {
       if (error instanceof PodcastAlreadyExistsError) {

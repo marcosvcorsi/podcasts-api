@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podcasts-deploy
+spec:
+  selector:
+    matchLabels:
+      app: podcasts
+  template:
+    metadata:
+      labels:
+        app: podcasts
+    spec:
+      containers:
+      - name: podcasts
+        image: mvcorsi/podcasts-api
+        resources:
+          requests:
+            cpu: 500m
+          limits:
+            memory: "128Mi"
+            cpu: 500m
+        env:
+          - name: MONGO_URI
+            value: mongodb://podcasts-mongo-service:27017/podcasts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podcasts-service
+spec:
+  selector:
+    app: podcasts
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  type: LoadBalancer
