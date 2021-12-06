@@ -79,5 +79,5 @@ jobs:
         uses: hashicorp/setup-terraform@v1.2.1
       
       - name: Apply infra with Terraform
-        run: terraform init && terraform destroy -auto-approve
-        # run: terraform init && terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}" -auto-approve
+        # run: terraform init && terraform destroy -auto-approve
+        run: terraform init && terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}" -auto-approve
