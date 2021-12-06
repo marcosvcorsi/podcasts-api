@@ -2,12 +2,12 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   push:
     branches-ignore:
-      - "main"
-    
+      - 'main'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -19,13 +19,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
       # Setup node version
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      
+
       # Using yarn cache
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -38,19 +38,11 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      
+
       # Install dependencies
       - name: Install dependencies
         run: yarn
-      
-      # Up database for testing
-      - name: Database up
-        run: docker-compose up -d database    
 
       # Run tests
       - name: Run Tests
         run: yarn test:cov
-      
-      # Database down
-      - name: Database down
-        run: docker-compose down    

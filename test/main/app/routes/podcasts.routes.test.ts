@@ -1,3 +1,4 @@
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import { disconnect } from 'mongoose';
 import request from 'supertest';
 
@@ -6,8 +7,14 @@ import { Podcast as PodcastModel } from '@/infra/database/mongodb/schemas/Podcas
 import { app } from '@/main/app';
 
 describe('Podcasts Routes Tests', () => {
+  let mongod: MongoMemoryServer;
+
   beforeAll(async () => {
-    await connect();
+    mongod = await MongoMemoryServer.create();
+
+    const uri = mongod.getUri();
+
+    await connect(uri);
   });
 
   beforeEach(async () => {
@@ -16,6 +23,8 @@ describe('Podcasts Routes Tests', () => {
 
   afterAll(async () => {
     await disconnect();
+
+    await mongod.stop();
   });
 
   describe('POST /podcasts', () => {

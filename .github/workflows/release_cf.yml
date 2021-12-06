@@ -1,6 +1,6 @@
 name: Release
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   push:
     branches:
@@ -14,13 +14,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
+
       # Setup node version
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      
+
       # Using yarn cache
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -33,44 +33,36 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      
+
       # Install dependencies
       - name: Install dependencies
         run: yarn
-      
-      # Up database for testing
-      - name: Database up
-        run: docker-compose up -d database    
 
       # Run tests
       - name: Run Tests
         run: yarn test:cov
-      
-      # Database down
-      - name: Database down
-        run: docker-compose down
 
       # coveralls
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}   
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Get version from package.json
       - name: Extract package version
         uses: nyaa8/package-version@v1.0.3
-      
+
       # Show version
       - name: Print package version
         run: echo ${{ env.PACKAGE_VERSION }}
-      
+
       # Configure AWS Credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}  
+          aws-region: ${{ secrets.AWS_REGION }}
 
       # Upload a docker image to AWS ECR
       - name: Upload image to AWS ECR
@@ -82,11 +74,11 @@ jobs:
           cache_from: ${{ secrets.ECR_CACHE }}
           repo: podcasts-api
           tags: latest,${{ env.PACKAGE_VERSION }}
-          
-      # Execute CloudFormation    
+
+      # Execute CloudFormation
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: PodcastsAPI-Service
           template: cloud-formation.yml
-          parameter-overrides: "ImageTag=${{ env.PACKAGE_VERSION }}"     
+          parameter-overrides: 'ImageTag=${{ env.PACKAGE_VERSION }}'

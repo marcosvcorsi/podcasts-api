@@ -1,13 +1,20 @@
+import { MongoMemoryServer } from 'mongodb-memory-server';
+
 import { CreatePodcastParams } from '@/domain/useCases/createPodcast/ICreatePodcastUseCase';
 import { connect, disconnect } from '@/infra/database/mongodb';
 import { PodcastsRepository } from '@/infra/database/mongodb/repositories/PodcastsRepository';
 import { Podcast as PodcastModel } from '@/infra/database/mongodb/schemas/PodcastSchema';
 
 describe('PodcastsRepository Tests', () => {
+  let mongod: MongoMemoryServer;
   let podcastsRepository: PodcastsRepository;
 
   beforeAll(async () => {
-    await connect();
+    mongod = await MongoMemoryServer.create();
+
+    const uri = mongod.getUri();
+
+    await connect(uri);
   });
 
   beforeEach(async () => {
@@ -18,6 +25,8 @@ describe('PodcastsRepository Tests', () => {
 
   afterAll(async () => {
     await disconnect();
+
+    await mongod.stop();
   });
 
   describe('findByName()', () => {
