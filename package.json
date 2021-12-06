@@ -1,7 +1,7 @@
 {
   "name": "podcasts-api",
   "description": "Podcasts API",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "main": "dist/server.js",
   "author": "Marcos Corsi <marcosvcorsi@gmail.com>",
   "repository": {
