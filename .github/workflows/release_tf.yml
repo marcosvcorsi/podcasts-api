@@ -79,4 +79,4 @@ jobs:
         uses: hashicorp/setup-terraform@v1.2.1
       
       - name: Apply infra with Terraform
-        run: terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}"
+        run: terraform init && terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}" -auto-approve
