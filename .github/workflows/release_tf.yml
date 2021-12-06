@@ -74,3 +74,9 @@ jobs:
           cache_from: ${{ secrets.ECR_CACHE }}
           repo: podcasts-api
           tags: latest,${{ env.PACKAGE_VERSION }}
+          
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v1.2.1
+      
+      - name: Apply infra with Terraform
+        run: terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}"
