@@ -81,10 +81,6 @@ resource "aws_ecs_task_definition" "task_definition" {
       }
     }
   ])
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "aws_ecs_service" "service" {
