@@ -71,7 +71,6 @@ jobs:
           access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           registry: ${{ secrets.ECR_REGISTRY }}
-          cache_from: ${{ secrets.ECR_CACHE }}
           repo: podcasts-api
           tags: ${{ env.PACKAGE_VERSION }}
 
@@ -82,10 +81,3 @@ jobs:
 
       - name: Apply infra with Terraform
         run: terraform init && terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}" -auto-approve
-
-      - name: Deploy to Amazon ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          service: podcasts-api-service
-          cluster: default
-          wait-for-service-stability: true
