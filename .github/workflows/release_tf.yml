@@ -81,4 +81,4 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Apply infra with Terraform
-        run: terraform init && terraform apply -auto-approve
+        run: terraform init && terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}" -auto-approve
