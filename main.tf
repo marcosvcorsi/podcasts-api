@@ -1,4 +1,13 @@
 terraform {
+  # backend "remote" {
+  #   hostname     = "app.terraform.io"
+  #   organization = "marcosvcorsi"
+
+  #   workspaces {
+  #     name = "podcasts-api"
+  #   }
+  # }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
