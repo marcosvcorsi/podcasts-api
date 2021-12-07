@@ -82,3 +82,10 @@ jobs:
 
       - name: Apply infra with Terraform
         run: terraform init && terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}" -auto-approve
+
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          service: podcasts-api-service
+          cluster: default
+          wait-for-service-stability: true

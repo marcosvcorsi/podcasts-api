@@ -84,10 +84,9 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 resource "aws_ecs_service" "service" {
-  name            = "podcasts-api-service"
-  cluster         = "default"
+  name            = var.service_name
+  cluster         = var.cluster_name
   launch_type     = "EC2"
   desired_count   = 1
-  task_definition = "${aws_ecs_task_definition.task_definition.family}:${aws_ecs_task_definition.task_definition.revision}"
-  #task_definition = aws_ecs_task_definition.task_definition.arn
+  task_definition = aws_ecs_task_definition.task_definition.arn
 }
