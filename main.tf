@@ -60,7 +60,7 @@ resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = jsonencode([
     {
       name  = "podcast-api"
-      image = "989105994412.dkr.ecr.us-east-1.amazonaws.com/podcasts-api:${var.image_tag}"
+      image = "989105994412.dkr.ecr.us-east-1.amazonaws.com/podcasts-api:latest"
       portMappings = [
         {
           containerPort = 3000
