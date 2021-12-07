@@ -1,12 +1,12 @@
 terraform {
-  # backend "remote" {
-  #   hostname     = "app.terraform.io"
-  #   organization = "marcosvcorsi"
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "marcosvcorsi"
 
-  #   workspaces {
-  #     name = "podcasts-api"
-  #   }
-  # }
+    workspaces {
+      name = "podcasts-api"
+    }
+  }
 
   required_providers {
     aws = {
