@@ -65,7 +65,6 @@ resource "aws_ecs_task_definition" "task_definition" {
       portMappings = [
         {
           containerPort = 3000
-          hostPort      = 80
         }
       ]
       secrets = [

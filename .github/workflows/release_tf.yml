@@ -81,3 +81,6 @@ jobs:
 
       - name: Apply infra with Terraform
         run: terraform init && terraform apply -var="image_tag=${{ env.PACKAGE_VERSION }}" -auto-approve
+
+      - name: AWS ECS Service update
+        run: aws -v
